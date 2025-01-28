@@ -83,6 +83,71 @@ function handleClick(e, idx) {
 
 };
 
+function checkForWinner() {
+    //most concise way: using the "some" method:
+    //.some() tests each combo in winningCombos
+    //If any combo satisfies the condition, winner is set to true.
+    // winner = winningCombos.some(([a, b, c]) => {
+    //     return board[a] && board[a] === board[b] && board[a] === board[c];
+    // });
+
+    //for loop: good for explicit control (if you need the index as well)
+    // for (let i = 0; i < winningCombos.length; i++) {
+    //     const combo = winningCombos[i];
+    //     const a = combo[0];
+    //     const b = combo[1];
+    //     const c = combo[2];
+    //     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+    //         winner = true;
+    //         return;
+    //     }
+    // }
+
+    // for... of: Good for iterating over an array of arrays
+    // but does NOT give you the index
+    // Use forEach or for loop if you want the index or if you want to modify the original winningCombos array
+    for (const combo of winningCombos) {
+        //array destructuring: 
+        //breaking down an existing sub-array (combo) into individual variables
+        //extract [0] from combo and assign to a, etc.
+        const [a, b, c] = combo;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            winner === true;
+            return; //stop checking
+        }
+    }
+}
+
+//what is a tie?
+//when the board is completely full (there are no empty strings left)
+// && no winner has been determined yet
+function checkForTie() {
+    // check if the board is full
+    // if board is full && winner === false, then it's a tie
+    // update tie status to true
+
+    // .every() method: loops through every element in an array and checks if a specific condition is true for ALL elements
+    // if every element satisfies the condition, it returns true
+
+    // loops through each element of the board array
+    // temporarily assigns the current element of the array (X, O, "") to the variable square
+    // evaluates the condition in the callback function
+    if (board.every((square) => square !== "") && !winner) {
+        tie = true;
+    }
+
+    // could also use a forEach loop
+    //     let isFull = true;
+
+    // board.forEach(square => {
+    //     if (square === "") {
+    //         isFull = false; // If an empty square is found, it's not full
+    //     }
+    // });
+
+    // console.log(isFull); // false
+}
+
 function updateBoard() {
 //loop over board
 //forEach element, use currentIndex to access the corresponding square in the squareEls
