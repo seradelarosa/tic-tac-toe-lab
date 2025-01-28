@@ -38,6 +38,7 @@ body {
   margin: 5px 5px;
 }
 
+/*researched how to make the grid*/
 .sqr {
   border-right: 3px solid black;
   border-bottom: 3px solid black;
@@ -53,6 +54,7 @@ body {
   border-bottom: none;
 }
 
+/* grabbed this button from my own website */
 button {
   background-color: #fee6e3;
   border: 2px solid #111;
