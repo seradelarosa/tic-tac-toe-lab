@@ -1,22 +1,115 @@
 body {
-    background-color: gainsboro;
+  background-color: white;
   font-family: system-ui, sans-serif;
   text-align: center;
   margin: 0;
   padding-top: 20px;
-  }
-  
-  .board {
-    display: flex;
-    flex-wrap: wrap;
-    width: 325px;
-  }
-  
-  .sqr {
-    width: 30%;
-    aspect-ratio: 1/1;
-    border: 3px solid black;
-    font-size: 64px;
-    text-align: center;
-  }
-  
+  font-family: "Caveat", serif;
+}
+
+#title {
+  display: flex;
+  padding-left: 20%;
+  font-size: 4em;
+  color: pink;
+}
+
+#subtitle {
+  font-size: 3.5em;
+  color: pink;
+}
+
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 350px;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+.sqr {
+  font-family: "Rock Salt", serif;
+  font-size: 40px;
+  color: pink;
+  width: 100px;
+  height: 100px;
+  aspect-ratio: 1/1;
+  /* border: 3px solid black; */
+  margin: 5px 5px;
+}
+
+.sqr {
+  border-right: 3px solid black;
+  border-bottom: 3px solid black;
+}
+
+/* Remove right border from last column */
+.sqr:nth-child(3n) {
+  border-right: none;
+}
+
+/* Remove bottom border from last row */
+.sqr:nth-child(n+7) {
+  border-bottom: none;
+}
+
+button {
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  color: #111;
+  cursor: pointer;
+  font-family: "Caveat", serif;
+  font-size: 2rem;
+  justify-content: flex-end;
+  text-align: center;
+  height: 50px;
+  padding: 0 20px;
+  margin: 15px;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+}
+
+button:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 50px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+button:hover:after {
+  transform: translate(0, 0);
+}
+
+button:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+button:hover {
+  outline: 0;
+}
+
+#display-screen {
+  font-family: "Tiny5", serif;
+  font-size: 1.5em ;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.523);
+  color: white;
+  display: flex;
+  width: 30%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 13px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
