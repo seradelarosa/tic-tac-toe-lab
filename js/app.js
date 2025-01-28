@@ -35,6 +35,9 @@ const winningCombos = [
 
 //=====================================
 
+//call init when the page loads, load initial state of the game
+window.addEventListener("DOMContentLoaded", init);
+
 //add an event listener to each square element
 //track index dynamically through initialization so we can reference it directly later
 //in a forEach loop, the parameters are ALWAYS (element, index, array)
@@ -42,7 +45,7 @@ const winningCombos = [
 squareEls.forEach((square, idx) => {
     square.addEventListener("click", (e) => {
         handleClick(e, idx)
-        });
+    });
 });
 
 resetBtnEl.addEventListener("click", init);
@@ -60,26 +63,32 @@ function handleClick(e, idx) {
         return;
     }
 
+    //save the current player before updating the board
+    //ensures correct winner is displayed
+    const currentPlayer = turn;
+
     //update the board array with the current player's symbol
-    board[idx] = turn;
+    board[idx] = currentPlayer;
 
     //update the UI
-    square.textContent = turn;
+    square.textContent = currentPlayer;
 
     //switch turns
     checkForWinner();
     checkForTie();
 
-    //switch turns
+    //switch turns only if the game is not over
     //also possible with a ternary operator...
-    if (turn === "X") {
-        turn = "O";
-    } else {
-        turn = "X";
+    if (!winner && !tie) {
+        if (turn === "X") {
+            turn = "O";
+        } else {
+            turn = "X";
+        }
     }
 
     //update message
-    updateMessage();
+    updateMessage(currentPlayer);
 
 };
 
@@ -112,7 +121,7 @@ function checkForWinner() {
         //extract [0] from combo and assign to a, etc.
         const [a, b, c] = combo;
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-            winner === true;
+            winner = true;
             return; //stop checking
         }
     }
@@ -149,23 +158,28 @@ function checkForTie() {
 }
 
 function updateBoard() {
-//loop over board
-//forEach element, use currentIndex to access the corresponding square in the squareEls
-//start by putting a letter in each square depending on the value of each cell
+    //loop over board
+    //forEach element, use currentIndex to access the corresponding square in the squareEls
+    //start by putting a letter in each square depending on the value of each cell
+
+    squareEls.forEach((square, idx) => {
+        //update textContent of each square based on the board array
+        square.textContent = board[idx];
+    });
 };
 
-function updateMessage() {
-//render a message based on the current game state
-//if both winner and tie === false (meaning the game is still in progress), render whose turn it is
-//if winner === false && tie === true, render tie message
-//else, render congrats message that the player has won
-if (winner) {
-    messageEl.textContent = `Congratulations! ${turn} wins!`;
-} else if (tie) {
-    messageEl.textContent = "It's a tie!";
-} else {
-    messageEl.textContent = `It's ${turn}'s turn.`;
-}
+function updateMessage(currentPlayer) {
+    //render a message based on the current game state
+    //if both winner and tie === false (meaning the game is still in progress), render whose turn it is
+    //if winner === false && tie === true, render tie message
+    //else, render congrats message that the player has won
+    if (winner) {
+        messageEl.textContent = `Congratulations! ${currentPlayer} wins!`;
+    } else if (tie) {
+        messageEl.textContent = "It's a tie!";
+    } else {
+        messageEl.textContent = `It's ${turn}'s turn.`;
+    }
 };
 
 
@@ -174,10 +188,14 @@ function render() {
     updateMessage();
 };
 
-
 function init() {
-//call this function when the app loads
+    // Set the initial state
+    board = ["", "", "", "", "", "", "", "", ""]; // Empty board
+    turn = "X"; // Start with player X
+    winner = false; // No winner yet
+    tie = false; // No tie yet
 
+    // Render the initial state
     render();
 };
 
