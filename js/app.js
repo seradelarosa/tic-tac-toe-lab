@@ -48,6 +48,7 @@ squareEls.forEach((square, idx) => {
     });
 });
 
+
 resetBtnEl.addEventListener("click", init);
 
 //=====================================
